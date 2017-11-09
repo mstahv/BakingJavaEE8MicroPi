@@ -19,13 +19,13 @@ public class StockWebsocket {
     public void onOpen(Session session) {
         System.out.println("Opened Session" + session.getId());
         mySession = session;
-        sessionManager.registerSession(session);
+        //sessionManager.registerSession(session);
     }
 
     @OnClose
     public void onClose(Session session) {
         System.out.println("Closed Session" + session.getId());
-        sessionManager.deregisterSession(session);
+       // sessionManager.deregisterSession(session);
     }
 
     @OnMessage
@@ -38,7 +38,7 @@ public class StockWebsocket {
     public void onError(Throwable t) {
         System.out.println("Error ");
         t.printStackTrace();
-        sessionManager.deregisterSession(mySession);
+       // sessionManager.deregisterSession(mySession);
     }
 
 }

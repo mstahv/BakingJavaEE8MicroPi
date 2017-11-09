@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 @ApplicationScoped
 public class StockSessionManager {
 
-    private HashSet<Session> sessions;
+    private HashSet<VaadinUI> sessions;
 
     @Inject
     private ClusteredCDIEventBus bus;
@@ -33,7 +33,7 @@ public class StockSessionManager {
      * Register the session to our set of Sessions
      * @param session The session to register
      */
-    void registerSession(Session session) {
+    void registerSession(VaadinUI session) {
         sessions.add(session);
     }
 
@@ -41,7 +41,7 @@ public class StockSessionManager {
      * Deregisters the session from our set of Sessions
      * @param session The session to deregister
      */
-    void deregisterSession(Session session) {
+    void deregisterSession(VaadinUI session) {
         sessions.remove(session);
     }
 
@@ -51,13 +51,9 @@ public class StockSessionManager {
      */
     private void observer(@Observes @Inbound Stock stock) {
         System.out.println("received stock event");
-        try {
-            for (Session session : sessions) {
+            for (VaadinUI session : sessions) {
                 System.out.println("Received " + stock.toString() + " writing to " + session.getId());
-                session.getBasicRemote().sendText(stock.toString());
+                session.showStock(stock);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(StockSessionManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }
