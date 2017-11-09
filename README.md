@@ -6,5 +6,6 @@ To start the ticker service:
     
     
 To start the UI service:
+
     java -jar StockWeb/target/StockWeb-1.0-SNAPSHOT-microbundle.jar --autobindhttp
 
